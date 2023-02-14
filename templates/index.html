@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>BOT</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <h3 class="text-center">克隆BOT</h3>
+    <form>
+      <div class="form-group">
+        <label for="inputText">Enter text:</label>
+        <input type="text" class="form-control" id="inputText">
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+    </form>
+    <div class="mt-3" id="response"></div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", function(event) {
+
+      event.preventDefault();
+      const inputText = document.getElementById("inputText").value;
+      if (inputText) {
+        const formData = new FormData();
+        formData.append("text", inputText);
+        fetch('/prompt', {
+          method: 'POST',
+          body: formData
+        }).then(res => res.text()).then(result => {
+          document.getElementById("response").innerHTML = JSON.stringify(result);
+        })
+      } else {
+        alert("Please enter some text");
+      }
+    });
+  </script>
+</body>
+</html>
